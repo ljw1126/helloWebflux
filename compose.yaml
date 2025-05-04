@@ -1,0 +1,13 @@
+services:
+  mysql:
+    container_name: r2dbc-mysql
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: tester
+      MYSQL_PASSWORD: tester1234
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
