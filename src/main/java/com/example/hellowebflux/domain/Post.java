@@ -1,27 +1,32 @@
 package com.example.hellowebflux.domain;
 
-
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Getter
-@Setter
-@AllArgsConstructor
 @Builder
-@Table("users")
-public class User {
+@Table("posts")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Post {
+
     @Id
     private Long id;
-    private String name;
-    private String email;
+
+    @Column("user_id")
+    private Long userId;
+
+    private String title;
+
+    private String content;
 
     @Column("created_at")
     @CreatedDate

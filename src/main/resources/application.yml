@@ -1,7 +1,10 @@
 spring:
   application:
     name: helloWebflux
-
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/testdb
+    username: tester
+    password: tester1234
 logging:
   level:
     root: INFO
