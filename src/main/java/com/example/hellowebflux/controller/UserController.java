@@ -1,8 +1,10 @@
 package com.example.hellowebflux.controller;
 
 import com.example.hellowebflux.controller.dto.UserCreateRequest;
+import com.example.hellowebflux.controller.dto.UserPostResponse;
 import com.example.hellowebflux.controller.dto.UserResponse;
 import com.example.hellowebflux.controller.dto.UserUpdateRequest;
+import com.example.hellowebflux.service.PostR2dbcService;
 import com.example.hellowebflux.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import reactor.core.publisher.Mono;
 public class UserController {
 
     private final UserService userService;
+    private final PostR2dbcService postR2dbcService;
 
     @PostMapping
     public Mono<UserResponse> create(@RequestBody UserCreateRequest request) {
@@ -54,5 +57,11 @@ public class UserController {
         return userService.update(id, request.getName(), request.getEmail())
                 .map(u -> ResponseEntity.ok(UserResponse.of(u)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
+
+    @GetMapping("/{id}/posts")
+    public Flux<UserPostResponse> getUserPosts(@PathVariable Long id) {
+        return postR2dbcService.findAllByUserId(id)
+                .map(UserPostResponse::of);
     }
 }
