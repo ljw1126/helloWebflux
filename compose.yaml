@@ -11,3 +11,12 @@ services:
       MYSQL_PASSWORD: tester1234
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  redis:
+    container_name: r2dbc-redis
+    image: redis:7.2-alpine
+    command: redis-server --port 6380
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - 6380:6380
